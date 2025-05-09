@@ -1,1 +1,49 @@
-<p>events works!</p>
+<div class="events-container">
+    <h2 class="section-title">Upcoming Events</h2>
+
+    <div class="filter-bar">
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search events..." [(ngModel)]="searchTerm">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn" [class.active]="activeFilter === 'All'" (click)="setFilter('All')">All</button>
+            <button class="filter-btn" [class.active]="activeFilter === 'Today'"
+                (click)="setFilter('Today')">Today</button>
+            <button class="filter-btn" [class.active]="activeFilter === 'This Week'"
+                (click)="setFilter('This Week')">This Week</button>
+            <button class="filter-btn" [class.active]="activeFilter === 'This Month'"
+                (click)="setFilter('This Month')">This Month</button>
+        </div>
+    </div>
+
+    <div class="card-grid">
+        <!-- Dynamic Event Cards -->
+        <div class="event-card" *ngFor="let event of events">
+            <div class="card-image" [style.background-image]="'url(' + event.image + ')'">
+                <div class="card-date">
+                    <span class="date-day">{{ getFormattedDay(event.date) }}</span>
+                    <span class="date-month">{{ getFormattedMonth(event.date) }}</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-tag">{{ event.category }}</div>
+                <h3 class="card-title">{{ event.title }}</h3>
+                <div class="card-details">
+                    <div class="detail">
+                        <i class="bi bi-clock"></i>
+                        {{ getFormattedTime(event.date) }} - {{ event.endTime }}
+                    </div>
+                    <div class="detail">
+                        <i class="bi bi-geo-alt"></i>
+                        {{ event.location }}
+                    </div>
+                </div>
+                <p class="card-description">{{ event.description }}</p>
+                <div class="card-footer">
+                    <button class="btn-details" (click)="viewEventDetails(event.id)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
