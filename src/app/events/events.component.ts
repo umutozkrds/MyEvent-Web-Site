@@ -17,7 +17,6 @@ export class EventsComponent implements OnInit {
       endTime: '11:00 PM',
       location: 'Central Park, New York',
       description: 'Join us for a night of amazing music under the stars with top artists and bands.',
-      image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
       category: 'Music'
     },
     {
@@ -27,7 +26,6 @@ export class EventsComponent implements OnInit {
       endTime: '4:00 PM',
       location: 'Tech Hub, San Francisco',
       description: 'Learn the latest web development techniques from industry experts in this hands-on workshop.',
-      image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
       category: 'Tech'
     },
     {
@@ -37,7 +35,6 @@ export class EventsComponent implements OnInit {
       endTime: '8:00 PM',
       location: 'Harbor Plaza, Seattle',
       description: 'Enjoy gourmet cuisine and fine wines from top chefs and wineries from around the world.',
-      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
       category: 'Food'
     },
     {
@@ -47,7 +44,6 @@ export class EventsComponent implements OnInit {
       endTime: '10:00 PM',
       location: 'Grand Hotel, Chicago',
       description: 'Connect with professionals in your industry at this exclusive networking event.',
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
       category: 'Business'
     }
   ];

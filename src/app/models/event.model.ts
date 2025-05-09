@@ -5,7 +5,6 @@ export interface EventModel {
     endTime: string;
     location: string;
     description: string;
-    image: string;
     category: string;
 }
 

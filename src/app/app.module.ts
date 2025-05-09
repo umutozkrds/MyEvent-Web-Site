@@ -9,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { EventsComponent } from './events/events.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateEventComponent } from './create-event/create-event.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NavbarComponent,
     HomeComponent,
     EventsComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateEventComponent
   ],
   imports: [
     BrowserModule,

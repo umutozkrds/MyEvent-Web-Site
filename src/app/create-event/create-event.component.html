@@ -1,0 +1,85 @@
+<div class="create-event-container">
+    <div class="form-header">
+        <h2>Create New Event</h2>
+        <p>Fill in the details below to create your event</p>
+    </div>
+
+    <form class="event-form">
+        <!-- Basic Information Section -->
+        <div class="form-section">
+            <h3>Basic Information</h3>
+
+            <div class="form-group">
+                <label for="title">Event Title</label>
+                <input type="text" id="title" placeholder="Enter event title">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="time">Start Time</label>
+                    <input type="time" id="time">
+                </div>
+
+                <div class="form-group">
+                    <label for="endTime">End Time</label>
+                    <input type="time" id="endTime">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="Music">Music</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Food">Food</option>
+                    <option value="Business">Business</option>
+                    <option value="Art">Art</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="form-section">
+            <h3>Location</h3>
+
+            <div class="form-group">
+                <label for="location">Venue Name</label>
+                <input type="text" id="location" placeholder="Enter venue name">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" placeholder="City">
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" placeholder="State">
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="form-section">
+            <h3>Event Details</h3>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="4" placeholder="Describe your event"></textarea>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="button" class="btn-cancel">Cancel</button>
+            <button type="button" class="btn-create">Create Event</button>
+        </div>
+    </form>
+</div>

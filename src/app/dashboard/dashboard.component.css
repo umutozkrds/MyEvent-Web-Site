@@ -24,7 +24,7 @@
 .toggle-btn {
     position: absolute;
     right: 2px;
-    top: 20px;
+    top: 8px;
     background: white;
     border: 1px solid #dee2e6;
     border-radius: 50%;
@@ -40,7 +40,8 @@
 }
 
 .sidebar-content {
-    padding: 20px 15px;
+    padding: 25px 15px;
+    margin-top: 15px;
 }
 
 .sidebar-closed .sidebar-content {
