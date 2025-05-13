@@ -8,7 +8,7 @@ const Event = require('./models/event');
 mongoose.connect('mongodb+srv://umutozkardes0:9fqassqBgqD55Kt0@cluster0.adncq66.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
 
-        
+
         console.log('Connected to MongoDB');
     })
     .catch((err) => {
@@ -41,6 +41,8 @@ app.post('/api/events', (req, res, next) => {
         startTime: req.body.startTime,
         endTime: req.body.endTime,
         location: req.body.location,
+        city: req.body.city || '',
+        state: req.body.state || '',
         category: req.body.category
     });
     event.save().then((result) => {

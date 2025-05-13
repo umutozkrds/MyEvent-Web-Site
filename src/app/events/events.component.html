@@ -19,7 +19,7 @@
 
     <div class="card-grid">
         <!-- Dynamic Event Cards -->
-        <div class="event-card" *ngFor="let event of events">
+        <div class="event-card" *ngFor="let event of filteredEvents">
             <div class="card-content">
                 <div class="card-header">
                     <div class="card-date">
@@ -34,7 +34,7 @@
                 <div class="card-details">
                     <div class="detail">
                         <i class="bi bi-clock"></i>
-                        {{ getFormattedTime(event.date) }} - {{ event.endTime }}
+                        {{ event.startTime }} - {{ event.endTime }}
                     </div>
                     <div class="detail">
                         <i class="bi bi-geo-alt"></i>
@@ -48,6 +48,11 @@
                     <button class="btn-details" (click)="viewEventDetails(event.id)">View Details</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Display a message when no events are available -->
+        <div *ngIf="filteredEvents.length === 0" class="no-events-message">
+            <p>No events found. Try changing filters or adding a new event.</p>
         </div>
     </div>
 </div>

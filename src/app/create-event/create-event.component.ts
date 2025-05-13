@@ -18,7 +18,7 @@ export class CreateEventComponent {
     const event: EventModel = {
       id: 0,
       title: form.value.title,
-      date: form.value.date,
+      date: new Date(form.value.date),
       startTime: form.value.startTime,
       endTime: form.value.endTime,
       location: form.value.location,

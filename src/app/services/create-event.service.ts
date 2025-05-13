@@ -10,17 +10,22 @@ export class CreateEventService {
     private apiUrl = 'http://localhost:3000/api/events';
 
     constructor(private http: HttpClient) {
-        
+
     }
 
     createEvent(event: EventModel): Observable<any> {
         return this.http.post(this.apiUrl, event);
     }
 
-    getEvents(): Observable<any> {
-        return this.http.get<{ message: string, events: EventModel[] }>(this.apiUrl).pipe(
+    getEvents(): Observable<EventModel[]> {
+        return this.http.get<{ message: string, events: any[] }>(this.apiUrl).pipe(
             map((response) => {
-                return response.events;
+                return response.events.map(event => {
+                    return {
+                        ...event,
+                        date: new Date(event.date) // Convert string date to Date object
+                    };
+                });
             })
         );
     }
