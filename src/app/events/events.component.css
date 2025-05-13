@@ -65,6 +65,47 @@ a {
     color: #6c757d;
 }
 
+.sort-dropdown {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.sort-dropdown label {
+    margin-right: 8px;
+    font-size: 0.9rem;
+    color: #495057;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.sort-dropdown label i {
+    margin-right: 4px;
+    color: #0d6efd;
+}
+
+.sort-dropdown select {
+    padding: 8px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    background-color: white;
+    color: #495057;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.sort-dropdown select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+}
+
+.sort-dropdown select:hover {
+    background-color: #f8f9fa;
+}
+
 .filter-buttons {
     display: flex;
     gap: 10px;
@@ -113,6 +154,37 @@ a {
 .event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Card image styles */
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.event-card:hover .card-image-wrapper {
+    height: 150px;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.event-card:hover .hover-image {
+    opacity: 1;
 }
 
 .card-content {
@@ -225,8 +297,20 @@ a {
         align-items: flex-start;
     }
 
-    .search-box {
+    .search-box,
+    .sort-dropdown {
         max-width: 100%;
+        width: 100%;
         margin-bottom: 15px;
+    }
+
+    .sort-dropdown {
+        margin-right: 0;
+    }
+
+    .filter-buttons {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
     }
 }

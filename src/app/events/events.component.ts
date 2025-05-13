@@ -15,6 +15,7 @@ export class EventsComponent implements OnInit {
   searchTerm: string = '';
   activeFilter: string = 'All';
   filteredEvents: EventModel[] = [];
+  sortOption: string = 'dateAsc'; // Default sort option
 
   constructor(private router: Router, private createEventService: CreateEventService) { }
 
@@ -26,7 +27,12 @@ export class EventsComponent implements OnInit {
     this.createEventService.getEvents().subscribe({
       next: (events) => {
         console.log('Received events:', events);
-        this.events = events;
+        // Sort events by date (ascending order)
+        this.events = events.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateA.getTime() - dateB.getTime();
+        });
         this.filteredEvents = [...this.events];
         this.applyFilter(this.activeFilter);
       },
@@ -102,6 +108,31 @@ export class EventsComponent implements OnInit {
       });
     } else if (filter !== 'All') {
       this.filteredEvents = this.events.filter(event => event.category === filter);
+    }
+  }
+
+  sortEvents(): void {
+    switch (this.sortOption) {
+      case 'dateAsc':
+        this.filteredEvents.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateA.getTime() - dateB.getTime();
+        });
+        break;
+      case 'dateDesc':
+        this.filteredEvents.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateB.getTime() - dateA.getTime();
+        });
+        break;
+      case 'titleAsc':
+        this.filteredEvents.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'titleDesc':
+        this.filteredEvents.sort((a, b) => b.title.localeCompare(a.title));
+        break;
     }
   }
 }
