@@ -9,44 +9,6 @@ import { EventModel } from '../models/event.model';
   standalone: false
 })
 export class EventsComponent implements OnInit {
-  allEvents: EventModel[] = [
-    {
-      id: 1,
-      title: 'Summer Music Festival',
-      date: new Date('2025-05-15T18:00:00'),
-      endTime: '11:00 PM',
-      location: 'Central Park, New York',
-      description: 'Join us for a night of amazing music under the stars with top artists and bands.',
-      category: 'Music'
-    },
-    {
-      id: 2,
-      title: 'Web Development Workshop',
-      date: new Date('2025-05-27T10:00:00'),
-      endTime: '4:00 PM',
-      location: 'Tech Hub, San Francisco',
-      description: 'Learn the latest web development techniques from industry experts in this hands-on workshop.',
-      category: 'Tech'
-    },
-    {
-      id: 3,
-      title: 'Food & Wine Festival',
-      date: new Date('2025-05-29T12:00:00'),
-      endTime: '8:00 PM',
-      location: 'Harbor Plaza, Seattle',
-      description: 'Enjoy gourmet cuisine and fine wines from top chefs and wineries from around the world.',
-      category: 'Food'
-    },
-    {
-      id: 4,
-      title: 'Networking Mixer',
-      date: new Date('2025-06-10T19:00:00'),
-      endTime: '10:00 PM',
-      location: 'Grand Hotel, Chicago',
-      description: 'Connect with professionals in your industry at this exclusive networking event.',
-      category: 'Business'
-    }
-  ];
 
   events: EventModel[] = [];
   searchTerm: string = '';
@@ -56,7 +18,7 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialize events with all events
-    this.events = [...this.allEvents];
+    this.events = [...this.events];
   }
 
   getFormattedTime(date: Date): string {
@@ -82,7 +44,7 @@ export class EventsComponent implements OnInit {
     this.activeFilter = filter;
 
     // Start with all events for each filter operation
-    this.events = [...this.allEvents];
+    this.events = [...this.events];
 
     if (filter === 'Today') {
       this.events = this.events.filter(event => event.date.getDate() === today.getDate() &&
