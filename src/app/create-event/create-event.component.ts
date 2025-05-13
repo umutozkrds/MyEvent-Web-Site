@@ -28,6 +28,7 @@ export class CreateEventComponent {
 
     this.createEventService.createEvent(event).subscribe((response) => {
       console.log(response);
+      form.reset();
     });
   }
 }
