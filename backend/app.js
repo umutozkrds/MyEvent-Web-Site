@@ -34,7 +34,6 @@ app.use((req, res, next) => {
 
 app.post('/api/events', (req, res, next) => {
     const event = new Event({
-        id: req.body.id,
         title: req.body.title,
         description: req.body.description,
         date: req.body.date,

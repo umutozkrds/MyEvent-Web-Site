@@ -41,7 +41,12 @@
                         <span class="date-day">{{ getFormattedDay(event.date) }}</span>
                         <span class="date-month">{{ getFormattedMonth(event.date) }}</span>
                     </div>
-                    <div class="card-tag">{{ event.category }}</div>
+                    <div class="card-actions">
+                        <div class="card-tag">{{ event.category }}</div>
+                        <button class="btn-favorite" title="Add to favorites">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <h3 class="card-title">{{ event.title }}</h3>
@@ -60,7 +65,7 @@
                 <p class="card-description">{{ event.description }}</p>
 
                 <div class="card-footer">
-                    <button class="btn-details" (click)="viewEventDetails(event.id)">View Details</button>
+                    <button class="btn-details">View Details</button>
                 </div>
             </div>
         </div>

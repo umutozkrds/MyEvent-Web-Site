@@ -1,5 +1,5 @@
 export interface EventModel {
-    id: number;
+    _id?: string;  // MongoDB ID (optional for new events)
     title: string;
     date: Date;
     startTime: string;
@@ -8,6 +8,7 @@ export interface EventModel {
     description: string;
     category: string;
 }
+
 
 
 

@@ -16,7 +16,7 @@ export class CreateEventComponent {
 
   onSubmit(form: NgForm) {
     const event: EventModel = {
-      id: 0,
+
       title: form.value.title,
       date: new Date(form.value.date),
       startTime: form.value.startTime,
@@ -26,9 +26,14 @@ export class CreateEventComponent {
       category: form.value.category
     }
 
-    this.createEventService.createEvent(event).subscribe((response) => {
-      console.log(response);
-      form.reset();
+    this.createEventService.createEvent(event).subscribe({
+      next: (response) => {
+        console.log('Event created successfully:', response);
+        form.reset();
+      },
+      error: (error) => {
+        console.error('Error creating event:', error);
+      }
     });
   }
 }

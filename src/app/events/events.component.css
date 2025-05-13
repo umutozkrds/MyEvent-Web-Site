@@ -201,6 +201,12 @@ a {
     margin-bottom: 15px;
 }
 
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .card-date {
     display: flex;
     flex-direction: column;
@@ -232,6 +238,38 @@ a {
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 600;
+}
+
+.btn-favorite {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+}
+
+.btn-favorite:hover {
+    color: #ff4757;
+    background-color: rgba(255, 71, 87, 0.1);
+}
+
+.btn-favorite.active i {
+    color: #ff4757;
+    font-weight: bold;
+}
+
+.btn-favorite.active i::before {
+    content: "\F415";
+    /* Bootstrap icon code for filled heart */
+}
+
+.btn-favorite i {
+    font-size: 1.1rem;
 }
 
 .card-title {

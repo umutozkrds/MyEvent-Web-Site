@@ -72,10 +72,6 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  viewEventDetails(eventId: number): void {
-    this.router.navigate(['/events', eventId]);
-  }
-
   setFilter(filter: string): void {
     this.activeFilter = filter;
     this.applyFilter(filter);
