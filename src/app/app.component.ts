@@ -9,10 +9,13 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'MyEvent';
-
+  isAuthenticated = false;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.autoAuthUser();
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }
 }
