@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Event = require('./models/event');
+const eventRoutes = require('./router/posts');
+const userRoutes = require('./router/users');
 
 // Fixed MongoDB connection string - removing appName and using standard format
 mongoose.connect('mongodb+srv://umutozkardes0:9fqassqBgqD55Kt0@cluster0.adncq66.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -32,43 +34,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/events', (req, res, next) => {
-    const event = new Event({
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        location: req.body.location,
-        city: req.body.city || '',
-        state: req.body.state || '',
-        category: req.body.category
-    });
-    event.save().then((result) => {
-        res.status(201).json({
-            message: 'Event added successfully!',
-            event: result
-        });
-    }).catch((err) => {
-        res.status(500).json({
-            error: err
-        });
-    });
-});
-
-
-app.get('/api/events', (req, res, next) => {
-    Event.find().then((events) => {
-        res.status(200).json({
-            message: 'Events fetched successfully!',
-            events: events
-        });
-    }).catch((err) => {
-        res.status(500).json({
-            error: err
-        });
-    });
-});
+app.use('/api/events', eventRoutes);
+app.use('/api/users', userRoutes);
 
 module.exports = app;
 

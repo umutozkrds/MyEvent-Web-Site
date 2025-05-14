@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CreateEventService } from '../services/create-event.service';
+import { EventsService } from '../services/events.service';
 import { EventModel } from '../models/event.model';
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
-  providers: [CreateEventService],
+  providers: [EventsService],
   standalone: false
 })
 export class CreateEventComponent {
   // This is just the design, functionality would be added here
 
-  constructor(private createEventService: CreateEventService) { }
+  constructor(private eventsService: EventsService) { }
 
   onSubmit(form: NgForm) {
     const event: EventModel = {
@@ -26,7 +26,7 @@ export class CreateEventComponent {
       category: form.value.category
     }
 
-    this.createEventService.createEvent(event).subscribe({
+      this.eventsService.createEvent(event).subscribe({
       next: (response) => {
         console.log('Event created successfully:', response);
         form.reset();

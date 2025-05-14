@@ -1,0 +1,40 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Log In to MyEvent</h2>
+            <p>Welcome back! Please enter your credentials to access your account</p>
+        </div>
+
+        <form class="auth-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-with-icon">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-with-icon">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary">Log In</button>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a routerLink="/register">Register now</a></p>
+            </div>
+        </form>
+    </div>
+</div>

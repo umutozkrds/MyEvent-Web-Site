@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventModel } from '../models/event.model';
-import { CreateEventService } from '../services/create-event.service';
+import { EventsService } from '../services/events.service';
 
 @Component({
   selector: 'app-events',
@@ -17,7 +17,7 @@ export class EventsComponent implements OnInit {
   filteredEvents: EventModel[] = [];
   sortOption: string = 'dateAsc'; // Default sort option
 
-  constructor(private router: Router, private createEventService: CreateEventService) { }
+  constructor(private router: Router, private createEventService: EventsService) { }
 
   ngOnInit(): void {
     this.loadEvents();
@@ -25,10 +25,10 @@ export class EventsComponent implements OnInit {
 
   loadEvents(): void {
     this.createEventService.getEvents().subscribe({
-      next: (events) => {
+      next: (events: EventModel[]) => {
         console.log('Received events:', events);
         // Sort events by date (ascending order)
-        this.events = events.sort((a, b) => {
+        this.events = events.sort((a: EventModel, b: EventModel) => {
           const dateA = new Date(a.date);
           const dateB = new Date(b.date);
           return dateA.getTime() - dateB.getTime();
@@ -36,7 +36,7 @@ export class EventsComponent implements OnInit {
         this.filteredEvents = [...this.events];
         this.applyFilter(this.activeFilter);
       },
-      error: (error) => {
+      error: (error: Error) => {
         console.error('Error fetching events:', error);
       }
     });

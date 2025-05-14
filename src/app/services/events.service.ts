@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class CreateEventService {
+export class EventsService {
     private apiUrl = 'http://localhost:3000/api/events';
 
     constructor(private http: HttpClient) {
