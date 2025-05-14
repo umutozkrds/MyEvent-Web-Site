@@ -10,12 +10,23 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   title = 'MyEvent';
   isAuthenticated = false;
-  constructor(private authService: AuthService) { }
+
+  constructor(private authService: AuthService) {
+    // Call auto-auth as early as possible, but only in browser environment
+    if (typeof window !== 'undefined') {
+      this.authService.autoAuthUser();
+    }
+  }
 
   ngOnInit() {
-    this.authService.autoAuthUser();
+    // Subscribe to authentication status changes
     this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
+      console.log('App component - Authentication state changed:', isAuthenticated);
     });
+
+    // Make sure we have the initial authentication state
+    this.isAuthenticated = this.authService.getIsAuth();
+    console.log('App component - Initial auth state:', this.isAuthenticated);
   }
 }

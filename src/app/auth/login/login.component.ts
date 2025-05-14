@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,23 @@ import { Subscription } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   loginStatus: { success: boolean; message: string } | null = null;
   private authStatusSub!: Subscription;
+  returnUrl: string = '/';
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    // Get return URL from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log('Return URL after login will be:', this.returnUrl);
+
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
       authStatus => {
         console.log('Auth status changed:', authStatus);
@@ -48,6 +58,8 @@ export class LoginComponent implements OnInit {
           this.loginStatus = { success, message };
           if (success) {
             form.resetForm();
+            // Navigate to the return URL after successful login
+            this.router.navigateByUrl(this.returnUrl);
           }
         }
       );

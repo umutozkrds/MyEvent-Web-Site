@@ -51,9 +51,10 @@ export class AuthService {
                         this.authStatusListener.next(true);
                         const expiresInDuration = response.expiresIn;
                         this.saveAuthData(this.token, new Date(new Date().getTime() + expiresInDuration * 1000), this.userId);
-                        this.router.navigate(['/']);
+
+                        // Let the component handle navigation
                         if (callback) {
-                            callback(true, "Login successful! Redirecting to home page...");
+                            callback(true, "Login successful!");
                         }
                     }
                 },
@@ -78,33 +79,65 @@ export class AuthService {
     }
 
     autoAuthUser() {
-        const authInformation = this.getAuthData();
-        if (!authInformation) {
+        console.log('Attempting to auto-authenticate user');
+
+        // Skip authentication check if we're not in a browser environment
+        if (typeof window === 'undefined') {
+            console.log('Not in browser environment, skipping auto-auth');
             return;
         }
+
+        const authInformation = this.getAuthData();
+
+        if (!authInformation) {
+            console.log('No authentication data found');
+            // Make sure to explicitly set authentication status to false
+            this.isAuthenticated = false;
+            this.authStatusListener.next(false);
+            return;
+        }
+
         const now = new Date();
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+
         if (expiresIn > 0) {
+            console.log('Valid token found, expiring in', Math.round(expiresIn / 1000 / 60), 'minutes');
             this.token = authInformation.token;
             this.userId = authInformation.userId || '';
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
+        } else {
+            console.log('Token expired');
+            this.clearAuthData();
+            this.isAuthenticated = false;
+            this.authStatusListener.next(false);
         }
     }
 
     private saveAuthData(token: string, expirationDate: Date, userId: string) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('expiration', expirationDate.toISOString());
-        localStorage.setItem('userId', userId);
+        // Check if we're in a browser environment
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('token', token);
+            localStorage.setItem('expiration', expirationDate.toISOString());
+            localStorage.setItem('userId', userId);
+        }
     }
 
     private clearAuthData() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expiration');
-        localStorage.removeItem('userId');
+        // Check if we're in a browser environment
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('expiration');
+            localStorage.removeItem('userId');
+        }
     }
 
     private getAuthData() {
+        // Check if we're in a browser environment
+        if (typeof window === 'undefined') {
+            return null;
+        }
+
         const token = localStorage.getItem('token');
         const expirationDate = localStorage.getItem('expiration');
         const userId = localStorage.getItem('userId');
