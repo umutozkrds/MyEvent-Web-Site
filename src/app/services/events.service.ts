@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventModel } from '../models/event.model';
 import { map, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,12 +10,15 @@ import { map, Observable } from 'rxjs';
 export class EventsService {
     private apiUrl = 'http://localhost:3000/api/events';
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService
+    ) { }
 
     createEvent(event: EventModel): Observable<any> {
-        return this.http.post(this.apiUrl, event);
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.post(this.apiUrl, event, { headers });
     }
 
     getEvents(): Observable<EventModel[]> {
@@ -28,5 +32,42 @@ export class EventsService {
                 });
             })
         );
+    }
+
+    getEventsByCreator(creatorId: string): Observable<EventModel[]> {
+        const url = `${this.apiUrl}/user/${creatorId}`;
+        return this.http.get<{ message: string, events: any[] }>(url).pipe(
+            map((response) => {
+                return response.events.map(event => {
+                    return {
+                        ...event,
+                        date: new Date(event.date)
+                    };
+                });
+            })
+        );
+    }
+
+    getEvent(id: string): Observable<EventModel> {
+        return this.http.get<{ message: string, event: any }>(`${this.apiUrl}/${id}`).pipe(
+            map(response => {
+                return {
+                    ...response.event,
+                    date: new Date(response.event.date)
+                };
+            })
+        );
+    }
+
+    updateEvent(id: string, event: EventModel): Observable<any> {
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.put(`${this.apiUrl}/${id}`, event, { headers });
+    }
+
+    deleteEvent(id: string): Observable<any> {
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.delete(`${this.apiUrl}/${id}`, { headers });
     }
 }

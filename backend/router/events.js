@@ -10,4 +10,4 @@ router.get('/:id', eventController.getEvent);
 router.put('/:id', checkAuth, eventController.updateEvent);
 router.delete('/:id', checkAuth, eventController.deleteEvent);
 
-module.exports = router;
+module.exports = router; 

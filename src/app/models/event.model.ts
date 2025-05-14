@@ -7,6 +7,7 @@ export interface EventModel {
     location: string;
     description: string;
     category: string;
+    creator?: string;  // User ID who created the event
 }
 
 
