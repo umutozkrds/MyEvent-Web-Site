@@ -77,6 +77,10 @@
                     name="description"></textarea>
             </div>
         </div>
+        <div class="form-group">
+            <label for="image">Event Image</label>
+            <input type="file" id="image" ngModel required name="image" (change)="onFileSelected($event)">
+        </div>
 
         <div class="form-buttons">
             <button type="button" class="btn-cancel">Cancel</button>

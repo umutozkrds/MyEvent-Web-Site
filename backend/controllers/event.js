@@ -2,6 +2,11 @@ const Event = require('../models/event');
 const mongoose = require('mongoose');
 
 exports.createEvent = (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host');
+
+    // If image is uploaded via Cloudinary, use that URL
+    const imagePath = req.file ? req.file.path : undefined;
+
     const event = new Event({
         title: req.body.title,
         description: req.body.description,
@@ -10,7 +15,8 @@ exports.createEvent = (req, res, next) => {
         endTime: req.body.endTime,
         location: req.body.location,
         category: req.body.category,
-        creator: req.userData.userId
+        creator: req.userData.userId,
+        imagePath: imagePath
     });
     event.save().then((result) => {
         res.status(201).json({
@@ -96,6 +102,12 @@ exports.getEventsByCreator = (req, res, next) => {
 }
 
 exports.updateEvent = (req, res, next) => {
+    let imagePath = req.body.imagePath;
+    if (req.file) {
+        // If new file is uploaded, use the Cloudinary URL
+        imagePath = req.file.path;
+    }
+
     const event = new Event({
         _id: req.params.id,
         title: req.body.title,
@@ -105,7 +117,8 @@ exports.updateEvent = (req, res, next) => {
         endTime: req.body.endTime,
         location: req.body.location,
         category: req.body.category,
-        creator: req.userData.userId
+        creator: req.userData.userId,
+        imagePath: imagePath
     });
 
     Event.updateOne({ _id: req.params.id, creator: req.userData.userId }, event)

@@ -15,10 +15,20 @@ export class EventsService {
         private authService: AuthService
     ) { }
 
-    createEvent(event: EventModel): Observable<any> {
+    createEvent(event: EventModel, image: File): Observable<any> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.post(this.apiUrl, event, { headers });
+        const formData = new FormData();
+        formData.append('title', event.title);
+        formData.append('date', event.date.toISOString());
+        formData.append('startTime', event.startTime);
+        formData.append('endTime', event.endTime);
+        formData.append('location', event.location);
+        formData.append('description', event.description);
+        formData.append('category', event.category);
+        formData.append('image', image, image.name);
+
+        return this.http.post(this.apiUrl, formData, { headers });
     }
 
     getEvents(): Observable<EventModel[]> {
@@ -59,10 +69,31 @@ export class EventsService {
         );
     }
 
-    updateEvent(id: string, event: EventModel): Observable<any> {
+    updateEvent(id: string, event: EventModel, image: File | string): Observable<any> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.put(`${this.apiUrl}/${id}`, event, { headers });
+
+        if (typeof image === 'string') {
+            // No new image, just update the event data
+            const eventData = {
+                ...event,
+                imagePath: image
+            };
+            return this.http.put(`${this.apiUrl}/${id}`, eventData, { headers });
+        } else {
+            // New image uploaded, use FormData
+            const formData = new FormData();
+            formData.append('title', event.title);
+            formData.append('date', event.date.toISOString());
+            formData.append('startTime', event.startTime);
+            formData.append('endTime', event.endTime);
+            formData.append('location', event.location);
+            formData.append('description', event.description);
+            formData.append('category', event.category);
+            formData.append('image', image, image.name);
+
+            return this.http.put(`${this.apiUrl}/${id}`, formData, { headers });
+        }
     }
 
     deleteEvent(id: string): Observable<any> {

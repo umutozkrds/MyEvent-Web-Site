@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Event = require('./models/event');
 const eventRoutes = require('./router/events');
 const userRoutes = require('./router/users');
+const path = require('path');
 
 // Fixed MongoDB connection string - removing appName and using standard format
 mongoose.connect('mongodb+srv://umutozkardes0:9fqassqBgqD55Kt0@cluster0.adncq66.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -17,10 +18,15 @@ mongoose.connect('mongodb+srv://umutozkardes0:9fqassqBgqD55Kt0@cluster0.adncq66.
 
 const app = express();
 
-app.use(bodyParser.json());
+// Increase payload size limits
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+// Serve static images from backend/images
+app.use('/images', express.static(path.join('backend/images')));
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://res.cloudinary.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));

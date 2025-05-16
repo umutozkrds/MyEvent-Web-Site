@@ -8,6 +8,7 @@ export interface EventModel {
     description: string;
     category: string;
     creator?: string;  // User ID who created the event
+    imagePath?: string;
 }
 
 

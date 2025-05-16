@@ -78,33 +78,50 @@ export class EventsComponent implements OnInit {
   }
 
   applyFilter(filter: string): void {
+    this.filteredEvents = [...this.events];
+
+    if (filter === 'All') {
+      return;
+    }
+
     const today = new Date();
     const oneWeekFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     const oneMonthFromNow = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const normalizeDate = (date: Date, isEndDate: boolean = false): Date => {
+      const normalized = new Date(date);
+      if (isEndDate) {
+        normalized.setHours(23, 59, 59, 999);
+      } else {
+        normalized.setHours(0, 0, 0, 0);
+      }
+      return normalized;
+    };
 
-    // Start with all events for each filter operation
-    this.filteredEvents = [...this.events];
+    const todayNormalized = normalizeDate(today);
 
     if (filter === 'Today') {
       this.filteredEvents = this.events.filter(event => {
-        const eventDate = new Date(event.date);
-        return eventDate.getDate() === today.getDate() &&
-          eventDate.getMonth() === today.getMonth() &&
-          eventDate.getFullYear() === today.getFullYear();
+        const eventDateNormalized = normalizeDate(new Date(event.date));
+        const nextDayNormalized = new Date(todayNormalized);
+        nextDayNormalized.setDate(nextDayNormalized.getDate() + 1);
+        return eventDateNormalized >= todayNormalized && eventDateNormalized < nextDayNormalized;
       });
     } else if (filter === 'This Week') {
+      const weekEndNormalized = normalizeDate(oneWeekFromNow, true);
       this.filteredEvents = this.events.filter(event => {
-        const eventDate = new Date(event.date);
-        return eventDate >= today && eventDate <= oneWeekFromNow;
+        const eventDateNormalized = normalizeDate(new Date(event.date));
+        return eventDateNormalized >= todayNormalized && eventDateNormalized <= weekEndNormalized;
       });
     } else if (filter === 'This Month') {
+      const monthEndNormalized = normalizeDate(oneMonthFromNow, true);
       this.filteredEvents = this.events.filter(event => {
-        const eventDate = new Date(event.date);
-        return eventDate >= today && eventDate <= oneMonthFromNow;
+        const eventDateNormalized = normalizeDate(new Date(event.date));
+        return eventDateNormalized >= todayNormalized && eventDateNormalized <= monthEndNormalized;
       });
-    } else if (filter !== 'All') {
+    } else {
       this.filteredEvents = this.events.filter(event => event.category === filter);
     }
+    this.sortEvents();
   }
 
   sortEvents(): void {
