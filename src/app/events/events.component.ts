@@ -26,7 +26,6 @@ export class EventsComponent implements OnInit {
   loadEvents(): void {
     this.createEventService.getEvents().subscribe({
       next: (events: EventModel[]) => {
-        console.log('Received events:', events);
         // Sort events by date (ascending order)
         this.events = events.sort((a: EventModel, b: EventModel) => {
           const dateA = new Date(a.date);

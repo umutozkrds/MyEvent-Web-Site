@@ -50,7 +50,6 @@ export class CreateEventComponent implements OnInit {
 
     this.eventsService.createEvent(event, this.selectedFile).subscribe({
       next: (response) => {
-        console.log('Event created successfully:', response);
         form.reset();
         this.selectedFile = null;
         this.router.navigate(['/events']);

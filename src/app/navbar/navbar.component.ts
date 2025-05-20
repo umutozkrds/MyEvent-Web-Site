@@ -19,11 +19,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (typeof window !== 'undefined') {
       // Initialize with the current auth state
       this.isAuthenticated = this.authService.getIsAuth();
-      console.log('Navbar initial auth state:', this.isAuthenticated);
 
       // Subscribe to future auth state changes
       this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-        console.log('Navbar auth state changed:', isAuthenticated);
         this.isAuthenticated = isAuthenticated;
       });
     }

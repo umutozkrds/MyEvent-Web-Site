@@ -25,11 +25,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Get return URL from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    console.log('Return URL after login will be:', this.returnUrl);
 
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
       authStatus => {
-        console.log('Auth status changed:', authStatus);
         this.isLoading = false;
       }
     );

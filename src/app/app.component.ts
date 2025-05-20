@@ -22,11 +22,9 @@ export class AppComponent implements OnInit {
     // Subscribe to authentication status changes
     this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
-      console.log('App component - Authentication state changed:', isAuthenticated);
     });
 
     // Make sure we have the initial authentication state
     this.isAuthenticated = this.authService.getIsAuth();
-    console.log('App component - Initial auth state:', this.isAuthenticated);
   }
 }

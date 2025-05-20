@@ -38,12 +38,10 @@ export class AuthService {
 
     login(email: string, password: string, callback?: (success: boolean, message: string) => void) {
         const authData = { email: email, password: password };
-        console.log('Login request initiated for:', email);
 
         this.http.post<{ token: string, expiresIn: number, userId: string }>('http://localhost:3000/api/users/login', authData)
             .subscribe({
                 next: response => {
-                    console.log('Login response received:', response);
                     this.token = response.token;
                     if (this.token) {
                         this.userId = response.userId;
@@ -79,18 +77,15 @@ export class AuthService {
     }
 
     autoAuthUser() {
-        console.log('Attempting to auto-authenticate user');
 
         // Skip authentication check if we're not in a browser environment
         if (typeof window === 'undefined') {
-            console.log('Not in browser environment, skipping auto-auth');
             return;
         }
 
         const authInformation = this.getAuthData();
 
         if (!authInformation) {
-            console.log('No authentication data found');
             // Make sure to explicitly set authentication status to false
             this.isAuthenticated = false;
             this.authStatusListener.next(false);
@@ -101,13 +96,11 @@ export class AuthService {
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
 
         if (expiresIn > 0) {
-            console.log('Valid token found, expiring in', Math.round(expiresIn / 1000 / 60), 'minutes');
             this.token = authInformation.token;
             this.userId = authInformation.userId || '';
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
         } else {
-            console.log('Token expired');
             this.clearAuthData();
             this.isAuthenticated = false;
             this.authStatusListener.next(false);

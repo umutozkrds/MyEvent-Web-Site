@@ -21,7 +21,6 @@ export class RegisterComponent {
     const name = form.value.firstName + ' ' + form.value.lastName;
     this.authService.signup(name, form.value.email, form.value.password).subscribe({
       next: (response) => {
-        console.log(response);
         form.reset();
       },
       error: (error) => {
