@@ -147,4 +147,12 @@ export class EventsComponent implements OnInit {
         break;
     }
   }
+
+  addFavourite(eventId: string): void {
+    this.createEventService.addFavourite(eventId).subscribe({
+      next: () => {
+        console.log('Event added to favorites' + eventId);
+      }
+    });
+  }
 }

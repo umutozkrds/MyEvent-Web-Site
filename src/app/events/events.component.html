@@ -41,7 +41,7 @@
                     </div>
                     <div class="card-actions">
                         <div class="card-tag">{{ event.category }}</div>
-                        <button class="btn-favorite" title="Add to favorites">
+                        <button class="btn-favorite" title="Add to favorites" (click)="addFavourite(event._id || '')">
                             <i class="bi bi-heart"></i>
                         </button>
                     </div>

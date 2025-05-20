@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    favourites: {
+        type: [String],
+        default: [],
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

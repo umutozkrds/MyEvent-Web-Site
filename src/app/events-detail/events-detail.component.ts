@@ -60,5 +60,21 @@ export class EventsDetailComponent implements OnInit {
     return dateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
   }
 
+  addFavourite(eventId: string | undefined): void {
+    if (!eventId) return;
 
+    this.eventsService.addFavourite(eventId).subscribe({
+      next: (response) => {
+        this.isFavorite = !this.isFavorite;
+        console.log(response.message);
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          console.log(error.error.message || 'This event is already in your favorites');
+        } else {
+          console.error('Error updating favorites:', error);
+        }
+      }
+    });
+  }
 }

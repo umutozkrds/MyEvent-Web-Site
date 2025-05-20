@@ -76,7 +76,7 @@
                     <span class="date-day">{{ getFormattedDay(event?.date) }}</span>
                     <span class="date-month">{{ getFormattedMonth(event?.date) }}</span>
                 </div>
-                <button class="btn-favorite">
+                <button class="btn-favorite" (click)="addFavourite(event?._id)">
                     <i class="bi" [class.bi-heart]="!isFavorite" [class.bi-heart-fill]="isFavorite"></i>
                     {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
                 </button>
