@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
     providedIn: 'root'
 })
 export class EventsService {
-    private apiUrl = 'http://localhost:3000/api/events';
+    private apiUrl = 'http://localhost:3000/api';
 
     constructor(
         private http: HttpClient,
@@ -28,11 +28,11 @@ export class EventsService {
         formData.append('category', event.category);
         formData.append('image', image, image.name);
 
-        return this.http.post(this.apiUrl, formData, { headers });
+        return this.http.post(`${this.apiUrl}/events`, formData, { headers });
     }
 
     getEvents(): Observable<EventModel[]> {
-        return this.http.get<{ message: string, events: any[] }>(this.apiUrl).pipe(
+        return this.http.get<{ message: string, events: any[] }>(`${this.apiUrl}/events`).pipe(
             map((response) => {
                 return response.events.map(event => {
                     return {
@@ -44,22 +44,8 @@ export class EventsService {
         );
     }
 
-    getEventsByCreator(creatorId: string): Observable<EventModel[]> {
-        const url = `${this.apiUrl}/user/${creatorId}`;
-        return this.http.get<{ message: string, events: any[] }>(url).pipe(
-            map((response) => {
-                return response.events.map(event => {
-                    return {
-                        ...event,
-                        date: new Date(event.date)
-                    };
-                });
-            })
-        );
-    }
-
     getEvent(id: string): Observable<EventModel> {
-        return this.http.get<{ message: string, event: any }>(`${this.apiUrl}/${id}`).pipe(
+        return this.http.get<{ message: string, event: any }>(`${this.apiUrl}/events/${id}`).pipe(
             map(response => {
                 return {
                     ...response.event,
@@ -79,7 +65,7 @@ export class EventsService {
                 ...event,
                 imagePath: image
             };
-            return this.http.put(`${this.apiUrl}/${id}`, eventData, { headers });
+            return this.http.put(`${this.apiUrl}/events/${id}`, eventData, { headers });
         } else {
             // New image uploaded, use FormData
             const formData = new FormData();
@@ -92,13 +78,13 @@ export class EventsService {
             formData.append('category', event.category);
             formData.append('image', image, image.name);
 
-            return this.http.put(`${this.apiUrl}/${id}`, formData, { headers });
+            return this.http.put(`${this.apiUrl}/events/${id}`, formData, { headers });
         }
     }
 
     deleteEvent(id: string): Observable<any> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.delete(`${this.apiUrl}/${id}`, { headers });
+        return this.http.delete(`${this.apiUrl}/events/${id}`, { headers });
     }
 }
