@@ -16,6 +16,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthService } from './services/auth.service';
+import { EventsDetailComponent } from './events-detail/events-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AuthService } from './services/auth.service';
     DashboardComponent,
     CreateEventComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EventsDetailComponent
   ],
   imports: [
     BrowserModule,
