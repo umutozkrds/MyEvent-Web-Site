@@ -100,5 +100,9 @@ export class EventsService {
         return this.http.get(`${this.apiUrl}/users/favourites/${this.authService.getUserId()}`, { headers });
     }
 
-    
+    removeFavourite(eventId: string): Observable<any> {
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.delete(`${this.apiUrl}/users/favourites/${eventId}`, { headers, body: { userId: this.authService.getUserId() } });
+    }
 }

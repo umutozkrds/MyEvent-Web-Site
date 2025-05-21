@@ -71,12 +71,6 @@ exports.addFavourite = async (req, res) => {
             });
         }
 
-        if (user.favourites.includes(eventId)) {
-            return res.status(400).json({
-                message: 'Event already in favorites'
-            });
-        }
-
         user.favourites.push(eventId);
         await user.save();
 
@@ -89,6 +83,32 @@ exports.addFavourite = async (req, res) => {
         });
     }
 
+}
+
+exports.removeFavourite = async (req, res) => {
+    try {
+        const eventId = req.params.eventId;
+        const userId = req.body.userId; 
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+        user.favourites = user.favourites.filter(id => id.toString() !== eventId);
+        await user.save();
+
+        return res.status(200).json({
+            message: 'Event removed from favorites'
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Failed to remove event from favorites'
+        });
+    }
 }
 
 

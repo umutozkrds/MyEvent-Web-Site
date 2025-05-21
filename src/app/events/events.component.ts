@@ -40,6 +40,18 @@ export class EventsComponent implements OnInit {
     });
   }
 
+  removeFavourite(eventId: string): void {
+    this.eventService.removeFavourite(eventId).subscribe({
+      next: () => {
+        console.log('Event removed from favorites:', eventId);
+        this.loadFavourites();
+      },
+      error: (error) => {
+        console.error('Error removing favorite:', error);
+      }
+    });
+  }
+
   isFavourite(eventId: string): boolean {
     // Add null check and ensure it's an array
     if (!Array.isArray(this.favourites)) {
