@@ -247,12 +247,12 @@ a {
 .btn-favorite {
     background: none;
     border: none;
-    cursor: pointer;
     padding: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
 }
 
 .btn-favorite:hover {
@@ -260,13 +260,7 @@ a {
 }
 
 .btn-favorite i {
-    color: #6c757d;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
-}
-
-.btn-favorite:hover i {
-    color: #dc3545;
+    font-size: 1.2rem;
 }
 
 .card-title {

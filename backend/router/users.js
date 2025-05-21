@@ -5,4 +5,6 @@ const checkAuth = require('../middleware/auth');
 router.post('/signup', userController.createUser);
 router.post('/login', userController.userLogin);
 router.post('/favourites/:eventId', checkAuth, userController.addFavourite);
+router.get('/favourites/:userId', checkAuth, userController.getFavourites);
+
 module.exports = router;

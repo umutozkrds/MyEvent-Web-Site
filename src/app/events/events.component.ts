@@ -16,15 +16,41 @@ export class EventsComponent implements OnInit {
   activeFilter: string = 'All';
   filteredEvents: EventModel[] = [];
   sortOption: string = 'dateAsc'; // Default sort option
+  favourites: any[] = [];
 
-  constructor(private router: Router, private createEventService: EventsService) { }
+  constructor(private router: Router, private eventService: EventsService) { }
 
   ngOnInit(): void {
     this.loadEvents();
+
+    this.loadFavourites();
+  }
+
+  loadFavourites(): void {
+    this.eventService.getFavourites().subscribe({
+      next: (response: any) => {
+        console.log('Received favourites:', response);
+        // Ensure favourites is always an array from the response
+        this.favourites = Array.isArray(response.favourites) ? response.favourites : [];
+      },
+      error: (error) => {
+        console.error('Error loading favourites:', error);
+        this.favourites = [];
+      }
+    });
+  }
+
+  isFavourite(eventId: string): boolean {
+    // Add null check and ensure it's an array
+    if (!Array.isArray(this.favourites)) {
+      console.warn('Favourites is not an array:', this.favourites);
+      return false;
+    }
+    return this.favourites.includes(eventId);
   }
 
   loadEvents(): void {
-    this.createEventService.getEvents().subscribe({
+    this.eventService.getEvents().subscribe({
       next: (events: EventModel[]) => {
         // Sort events by date (ascending order)
         this.events = events.sort((a: EventModel, b: EventModel) => {
@@ -149,9 +175,14 @@ export class EventsComponent implements OnInit {
   }
 
   addFavourite(eventId: string): void {
-    this.createEventService.addFavourite(eventId).subscribe({
+    this.eventService.addFavourite(eventId).subscribe({
       next: () => {
-        console.log('Event added to favorites' + eventId);
+        console.log('Event added to favorites:', eventId);
+        // Reload favorites after adding
+        this.loadFavourites();
+      },
+      error: (error) => {
+        console.error('Error adding favorite:', error);
       }
     });
   }

@@ -88,4 +88,28 @@ exports.addFavourite = async (req, res) => {
             message: 'Failed to add event to favorites'
         });
     }
+
+}
+
+
+exports.getFavourites = async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const user = await User.findById(userId);
+
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found'
+                });
+            }
+
+            return res.status(200).json({
+                message: 'Favorites retrieved successfully',
+                favourites: user.favourites
+            });
+        } catch (error) {
+        return res.status(500).json({
+            message: 'Failed to retrieve favorites'
+        });
+    }
 };

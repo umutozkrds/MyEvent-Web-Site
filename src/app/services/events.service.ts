@@ -93,4 +93,12 @@ export class EventsService {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.post(`${this.apiUrl}/users/favourites/${eventId}`, { userId: this.authService.getUserId() }, { headers });
     }
+
+    getFavourites(): Observable<any> {
+        const token = this.authService.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get(`${this.apiUrl}/users/favourites/${this.authService.getUserId()}`, { headers });
+    }
+
+    
 }
