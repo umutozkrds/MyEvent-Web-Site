@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Event = require('./models/event');
 const eventRoutes = require('./router/events');
 const userRoutes = require('./router/users');
+const categoryRoutes = require('./router/categories');
 const path = require('path');
 
 // Fixed MongoDB connection string - removing appName and using standard format
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes);
 
 module.exports = app;
 

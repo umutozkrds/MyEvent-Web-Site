@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { CategoryModel } from '../models/category.model';
 import { EventModel } from '../models/event.model';
+import { CategoriesService } from '../services/categories.service';
 @Component({
   selector: 'app-home',
   standalone: false,
@@ -12,54 +13,15 @@ import { EventModel } from '../models/event.model';
 export class HomeComponent implements OnInit {
   featuredEvents: EventModel[] = [];
 
-  categories: CategoryModel[] = [
-    {
-      id: 1,
-      name: 'Music',
-      count: 12, 
-      icon: 'bi-music-note',
-      color: '#e9f5ff'
-    },
-    {
-      id: 2,
-      name: 'Tech',
-      count: 8,
-      icon: 'bi-laptop',
-      color: '#f8f9fa'
-    },
-    {
-      id: 3,
-      name: 'Food',
-      count: 15,
-      icon: 'bi-cup-hot',
-      color: '#fff8e1'
-    },
-    {
-      id: 4,
-      name: 'Business',
-      count: 10,
-      icon: 'bi-briefcase',
-      color: '#e8f5e9'
-    },
-    {
-      id: 5,
-      name: 'Art',
-      count: 7,
-      icon: 'bi-palette',
-      color: '#fce4ec'
-    },
-    {
-      id: 6,
-      name: 'Sports',
-      count: 14,
-      icon: 'bi-dribbble',
-      color: '#e3f2fd'
-    }
-  ];
+  categories: CategoryModel[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
+    this.categoriesService.getCategories().subscribe(categories => {
+      this.categories = categories.categories;
+      console.log(this.categories);
+    });
   }
 
   getFormattedTime(date: Date): string {
