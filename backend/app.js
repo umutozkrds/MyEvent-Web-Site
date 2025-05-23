@@ -7,9 +7,12 @@ const eventRoutes = require('./router/events');
 const userRoutes = require('./router/users');
 const categoryRoutes = require('./router/categories');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Fixed MongoDB connection string - removing appName and using standard format
-mongoose.connect('mongodb+srv://umutozkardes0:9fqassqBgqD55Kt0@cluster0.adncq66.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.mongodb_url)
     .then(() => {
         console.log('Connected to MongoDB');
     })
