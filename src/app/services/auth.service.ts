@@ -55,6 +55,7 @@ export class AuthService {
                             callback(true, "Login successful!");
                         }
                     }
+                    this.router.navigate(['/events']);
                 },
                 error: error => {
                     console.error('Login error:', error);

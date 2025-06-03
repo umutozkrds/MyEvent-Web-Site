@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { EventModel } from '../models/event.model';
 import { EventsService } from '../services/events.service';
 
 @Component({
-  selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css'],
-  standalone: false
+  selector: 'app-favourites',
+  standalone: false,
+  templateUrl: './favourites.component.html',
+  styleUrl: './favourites.component.css'
 })
-export class EventsComponent implements OnInit {
+export class FavouritesComponent {
 
   events: EventModel[] = [];
   searchTerm: string = '';
@@ -18,7 +17,7 @@ export class EventsComponent implements OnInit {
   sortOption: string = 'dateAsc'; // Default sort option
   favourites: any[] = [];
 
-  constructor(private router: Router, private eventService: EventsService) { }
+  constructor(private eventService: EventsService) { }
 
   ngOnInit(): void {
     this.loadFavourites();
@@ -26,31 +25,24 @@ export class EventsComponent implements OnInit {
   }
 
   loadFavourites(): void {
-    this.eventService.getFavourites().subscribe({
-      next: (response: any) => {
-        console.log('Received favourites:', response);
-        // Ensure favourites is always an array from the response
-        this.favourites = Array.isArray(response.favourites) ? response.favourites : [];
-      },
-      error: (error) => {
-        console.error('Error loading favourites:', error);
-        this.favourites = [];
+    this.eventService.getFavourites().subscribe(
+      (favourites) => {
+        this.favourites = favourites.favourites;
+        console.log(this.favourites);
       }
-    });
+    );
   }
 
   getEvents(): void {
     this.eventService.getEvents().subscribe({
       next: (events: EventModel[]) => {
-        this.events = events;
+        console.log(events);
+        this.events = events.filter(event => this.favourites.includes(event._id));
+        console.log(this.events);
         this.filteredEvents = [...this.events];
       }
     });
   }
-
-  
-
-  
 
   isFavourite(eventId: string): boolean {
     // Add null check and ensure it's an array
@@ -60,8 +52,6 @@ export class EventsComponent implements OnInit {
     }
     return this.favourites.includes(eventId);
   }
-
- 
 
   getFormattedTime(date: Date | string): string {
     try {
