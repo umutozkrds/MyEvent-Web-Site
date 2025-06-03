@@ -8,7 +8,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './services/auth.guard';
 import { EventsDetailComponent } from './events-detail/events-detail.component';
 import { FavouritesComponent } from './favourites/favourites.component';
-
+import { CategoriesComponent } from './categories/categories.component';
 
 const routes: Routes = [
   { path: '',component: HomeComponent},
@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'favourites', component: FavouritesComponent, canActivate: [AuthGuard] },
+  { path: 'categories/:category', component: CategoriesComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

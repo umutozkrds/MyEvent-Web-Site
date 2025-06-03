@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { EventModel } from '../models/event.model';
 import { EventsService } from '../services/events.service';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
-  selector: 'app-favourites',
+  selector: 'app-categories',
   standalone: false,
-  templateUrl: './favourites.component.html',
-  styleUrl: './favourites.component.css'
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.css'
 })
-export class FavouritesComponent implements OnInit {
-
+export class CategoriesComponent implements OnInit {
+  category: string = '';
   events: EventModel[] = [];
   searchTerm: string = '';
   activeFilter: string = 'All';
@@ -17,7 +17,7 @@ export class FavouritesComponent implements OnInit {
   sortOption: string = 'dateAsc'; // Default sort option
   favourites: any[] = [];
 
-  constructor(private eventService: EventsService) { }
+  constructor(private eventService: EventsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadFavourites();
@@ -34,14 +34,15 @@ export class FavouritesComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventService.getEvents().subscribe({
-      next: (events: EventModel[]) => {
-        console.log(events);
-        this.events = events.filter(event => this.favourites.includes(event._id));
-        console.log(this.events);
-        this.filteredEvents = [...this.events];
-      }
-    });
+    this.route.params.subscribe(params => {
+        this.category = params['category'];
+        this.eventService.getEventsByCategory(this.category).subscribe(
+          (events) => {
+            this.events = events;
+            this.filteredEvents = [...this.events];
+          }
+        );
+      });
   }
 
   isFavourite(eventId: string): boolean {
@@ -184,4 +185,5 @@ export class FavouritesComponent implements OnInit {
       }
     });
   }
-}
+} 
+

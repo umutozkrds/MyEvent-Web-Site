@@ -18,6 +18,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthService } from './services/auth.service';
 import { EventsDetailComponent } from './events-detail/events-detail.component';
 import { FavouritesComponent } from './favourites/favourites.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FavouritesComponent } from './favourites/favourites.component';
     LoginComponent,
     RegisterComponent,
     EventsDetailComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

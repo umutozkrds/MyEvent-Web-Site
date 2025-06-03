@@ -51,11 +51,13 @@
         <h2 class="section-title">Browse by Category</h2>
         <div class="category-grid">
             <div class="category-card" *ngFor="let category of categories" [style.background-color]="category.color">
-                <div class="category-icon">
-                    <i class="bi" [ngClass]="category.icon"></i>
-                </div>
-                <h3 class="category-title">{{ category.name }}</h3>
-                <p>{{ category.count }} events</p>
+                <a class="category-link" routerLink="/categories/{{ category.name }}">
+                    <div class="category-icon">
+                        <i class="bi" [ngClass]="category.icon"></i>
+                    </div>
+                    <h3 class="category-title">{{ category.name }}</h3>
+                    <p>{{ category.count }} events</p>
+                </a>
             </div>
         </div>
     </div>

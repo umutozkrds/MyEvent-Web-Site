@@ -105,4 +105,18 @@ export class EventsService {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.delete(`${this.apiUrl}/users/favourites/${eventId}`, { headers, body: { userId: this.authService.getUserId() } });
     }
+
+    getEventsByCategory(category: string): Observable<EventModel[]> {
+        return this.http.get<{ message: string, events: any[] }>(`${this.apiUrl}/categories/${category}`).pipe(
+            map((response) => {
+                return response.events.map(event => {
+                    return {
+                        ...event,
+                        date: new Date(event.date)
+                    };
+                });
+            })
+        );
+    }
+    
 }
