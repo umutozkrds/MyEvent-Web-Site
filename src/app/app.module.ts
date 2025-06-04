@@ -19,6 +19,7 @@ import { AuthService } from './services/auth.service';
 import { EventsDetailComponent } from './events-detail/events-detail.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CategoriesComponent } from './categories/categories.component';
     RegisterComponent,
     EventsDetailComponent,
     FavouritesComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

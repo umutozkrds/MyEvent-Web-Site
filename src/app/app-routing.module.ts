@@ -9,6 +9,7 @@ import { AuthGuard } from './services/auth.guard';
 import { EventsDetailComponent } from './events-detail/events-detail.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: '',component: HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'favourites', component: FavouritesComponent, canActivate: [AuthGuard] },
   { path: 'categories/:category', component: CategoriesComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
